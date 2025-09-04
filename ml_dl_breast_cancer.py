@@ -62,7 +62,29 @@ if section == "DASHBOARD":
                             fig, ax = plt.subplots(figsize=(10, 6))
                             sns.heatmap(df[num_cols].corr(), annot=True, cmap="coolwarm", ax=ax)
                             st.pyplot(fig) 
+if section == "EDA":
+        df = pd.read_csv("Breast_Cancer.csv")
+        st.header("Exploratory Data Analysis")
+        st.subheader("Data Preview")
+        st.dataframe(df.head())
 
+        st.subheader("Missing Values")
+        st.write(df.isnull().sum())
+
+        st.subheader("Data Types")
+        st.write(df.dtypes)
+
+        st.subheader("Summary Statistics")
+        st.write(df.describe())
+        st.subheader("Feature Distributions")
+        numeric_cols = df.select_dtypes(include=np.number).columns
+        selected_col = st.selectbox("Select column for distribution plot", numeric_cols)
+        fig, ax = plt.subplots()
+        sns.histplot(df[selected_col], kde=True, ax=ax)
+        st.pyplot(fig)
+
+
+    
                             
 
 if section == "MODEL":
